@@ -1,6 +1,9 @@
+import sys
+sys.path.append('../../Keras_VGGFace2_ResNet50/src')
 import PIL
 import numpy as np
 import config as cg
+import cv2
 
 def load_data(path='', shape=None, mode='eval'):
 
@@ -26,3 +29,19 @@ def load_data(path='', shape=None, mode='eval'):
     x = x[:, :, ::-1] - cg.mean
     return x
 
+def crop_image(img, shape):
+    short_size = 224.0
+    crop_size = shape
+    im_shape = img.shape[:2]
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    ratio = float(short_size) / np.min(im_shape)
+    resizeX = int(np.ceil(im_shape[1] * ratio))
+    resizeY = int(np.ceil(im_shape[0] * ratio))
+    img = cv2.resize(img, (resizeX, resizeY), interpolation=cv2.INTER_LINEAR)
+    im_shape = img.shape[:2]
+    y_start = (im_shape[0] - crop_size[0])//2
+    x_start = (im_shape[1] - crop_size[1])//2
+    # print(img.shape, y_start, x_start)
+    img = img[y_start: y_start + crop_size[0], x_start: x_start + crop_size[1]]
+    img = img[:,:,::-1] - cg.mean
+    return img

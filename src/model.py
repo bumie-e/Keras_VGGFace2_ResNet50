@@ -1,6 +1,7 @@
-import keras
+import tensorflow.keras as keras
+# import keras
 import resnet
-import keras.backend as K
+import tensorflow.keras.backend as K
 
 global weight_decay
 weight_decay = 1e-4
