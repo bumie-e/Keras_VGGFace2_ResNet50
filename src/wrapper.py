@@ -22,9 +22,9 @@ def chunks(l, n):
         yield l[i:i+n]
 
 def initialize_model():
-    import model
+    import Keras_VGGFace2_ResNet50.src.model as model
     model_eval = model.Vggface2_ResNet50(mode='eval')
-    weights_path = os.path.join('../../Keras_VGGFace2_ResNet50/weights/weights.h5')
+    weights_path = os.path.join('../Keras_VGGFace2_ResNet50/weights/weights.h5')
     model_eval.load_weights(weights_path, by_name=True)
     return model_eval
 

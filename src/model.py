@@ -1,6 +1,6 @@
 import tensorflow.keras as keras
 # import keras
-import resnet
+import Keras_VGGFace2_ResNet50.src.resnet as resnet
 import tensorflow.keras.backend as K
 
 global weight_decay

@@ -1,8 +1,8 @@
 import sys
-sys.path.append('../../Keras_VGGFace2_ResNet50/src')
+# sys.path.append('../../Keras_VGGFace2_ResNet50/src')
 import PIL
 import numpy as np
-import config as cg
+import Keras_VGGFace2_ResNet50.src.config as cg
 import cv2
 
 def load_data(path='', shape=None, mode='eval'):
