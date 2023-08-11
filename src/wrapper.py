@@ -21,16 +21,16 @@ def chunks(l, n):
         # Create an index range for l of n items:
         yield l[i:i+n]
 
-def initialize_model():
+def initialize_model(weights_path='../Keras_VGGFace2_ResNet50/weights/weights.h5'):
     import Keras_VGGFace2_ResNet50.src.model as model
     model_eval = model.Vggface2_ResNet50(mode='eval')
-    weights_path = os.path.join('../Keras_VGGFace2_ResNet50/weights/weights.h5')
+    weights_path = weights_path
     model_eval.load_weights(weights_path, by_name=True)
     return model_eval
 
 def image_encoding(model, face_track_images):
     FEATURE_DIM = 512
-    BATCH_SIZE = 256
+    BATCH_SIZE = 512
     num_faces = len(face_track_images)
     face_feats = np.empty((num_faces, FEATURE_DIM))
     idxes = list(range(num_faces))

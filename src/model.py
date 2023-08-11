@@ -29,7 +29,9 @@ def Vggface2_ResNet50(input_dim=(224, 224, 3), nb_classes=8631, optimizer='sgd',
     # Compile
     model = keras.models.Model(inputs=inputs, outputs=y)
     if optimizer == 'sgd':
-        opt = keras.optimizers.SGD(lr=0.1, momentum=0.9, decay=0.0, nesterov=True)
+        # opt = keras.optimizers.SGD(lr=0.1, momentum=0.9, decay=0.0, nesterov=True)
+        opt = keras.optimizers.SGD(lr=0.1, momentum=0.9, nesterov=True)
+        
     else:
         opt = keras.optimizers.Adam()
     model.compile(optimizer=opt,
