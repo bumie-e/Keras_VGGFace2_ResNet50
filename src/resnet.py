@@ -25,7 +25,7 @@ def identity_block(input_tensor, kernel_size, filters, stage, block, trainable=T
     bn_axis = 3
 
     conv_name_1 = 'conv' + str(stage) + '_' + str(block) + '_1x1_reduce'
-    bn_name_1 = 'conv' + str(stage) + '_' + str(block) + '_1x1_reduce/bn'
+    bn_name_1 = 'conv' + str(stage) + '_' + str(block) + '_1x1_reduce_bn'
     x = Conv2D(filters1, (1, 1),
                kernel_initializer='orthogonal',
                use_bias=False,
@@ -36,7 +36,7 @@ def identity_block(input_tensor, kernel_size, filters, stage, block, trainable=T
     x = Activation('relu')(x)
 
     conv_name_2 = 'conv' + str(stage) + '_' + str(block) + '_3x3'
-    bn_name_2 = 'conv' + str(stage) + '_' + str(block) + '_3x3/bn'
+    bn_name_2 = 'conv' + str(stage) + '_' + str(block) + '_3x3_bn'
     x = Conv2D(filters2, kernel_size,
                padding='same',
                kernel_initializer='orthogonal',
@@ -48,7 +48,7 @@ def identity_block(input_tensor, kernel_size, filters, stage, block, trainable=T
     x = Activation('relu')(x)
 
     conv_name_3 = 'conv' + str(stage) + '_' + str(block) + '_1x1_increase'
-    bn_name_3 = 'conv' + str(stage) + '_' + str(block) + '_1x1_increase/bn'
+    bn_name_3 = 'conv' + str(stage) + '_' + str(block) + '_1x1_increase_bn'
     x = Conv2D(filters3, (1, 1),
                kernel_initializer='orthogonal',
                use_bias=False,
@@ -79,7 +79,7 @@ def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2),
     bn_axis = 3
 
     conv_name_1 = 'conv' + str(stage) + '_' + str(block) + '_1x1_reduce'
-    bn_name_1 = 'conv' + str(stage) + '_' + str(block) + '_1x1_reduce/bn'
+    bn_name_1 = 'conv' + str(stage) + '_' + str(block) + '_1x1_reduce_bn'
     x = Conv2D(filters1, (1, 1), strides=strides,
                kernel_initializer='orthogonal',
                use_bias=False,
@@ -90,7 +90,7 @@ def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2),
     x = Activation('relu')(x)
 
     conv_name_2 = 'conv' + str(stage) + '_' + str(block) + '_3x3'
-    bn_name_2 = 'conv' + str(stage) + '_' + str(block) + '_3x3/bn'
+    bn_name_2 = 'conv' + str(stage) + '_' + str(block) + '_3x3_bn'
     x = Conv2D(filters2, kernel_size, padding='same',
                kernel_initializer='orthogonal',
                use_bias=False,
@@ -101,7 +101,7 @@ def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2),
     x = Activation('relu')(x)
 
     conv_name_3 = 'conv' + str(stage) + '_' + str(block) + '_1x1_increase'
-    bn_name_3 = 'conv' + str(stage) + '_' + str(block) + '_1x1_increase/bn'
+    bn_name_3 = 'conv' + str(stage) + '_' + str(block) + '_1x1_increase_bn'
     x = Conv2D(filters3, (1, 1),
                kernel_initializer='orthogonal',
                use_bias=False,
@@ -111,7 +111,7 @@ def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2),
     x = BatchNormalization(axis=bn_axis, name=bn_name_3)(x)
 
     conv_name_4 = 'conv' + str(stage) + '_' + str(block) + '_1x1_proj'
-    bn_name_4 = 'conv' + str(stage) + '_' + str(block) + '_1x1_proj/bn'
+    bn_name_4 = 'conv' + str(stage) + '_' + str(block) + '_1x1_proj_bn'
     shortcut = Conv2D(filters3, (1, 1), strides=strides,
                       kernel_initializer='orthogonal',
                       use_bias=False,
@@ -134,10 +134,10 @@ def resnet50_backend(inputs):
                trainable=True,
                kernel_regularizer=l2(weight_decay),
                padding = 'same',
-               name='conv1/7x7_s2')(inputs)
+               name='conv1_7x7_s2')(inputs)
 
     # inputs are of size 112 x 112 x 64
-    x = BatchNormalization(axis=bn_axis, name='conv1/7x7_s2/bn')(x)
+    x = BatchNormalization(axis=bn_axis, name='conv1_7x7_s2_bn')(x)
     x = Activation('relu')(x)
     x = MaxPooling2D((3, 3), strides=(2, 2))(x)
 
@@ -176,10 +176,10 @@ def resnet50_backend_truncated(inputs):
                trainable=True,
                kernel_regularizer=l2(weight_decay),
                padding = 'same',
-               name='conv1/7x7_s2')(inputs)
+               name='conv1_7x7_s2')(inputs)
 
     # inputs are of size 112 x 112 x 64
-    x = BatchNormalization(axis=bn_axis, name='conv1/7x7_s2/bn')(x)
+    x = BatchNormalization(axis=bn_axis, name='conv1_7x7_s2_bn')(x)
     x = Activation('relu')(x)
     x = MaxPooling2D((3, 3), strides=(2, 2))(x)
 
